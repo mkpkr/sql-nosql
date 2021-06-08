@@ -1,4 +1,4 @@
-INSERT INTO users(user_id, first_name, surname, dob)
+INSERT INTO users(user_id, first_name, last_name, dob)
 VALUES(1, 'mike', 'parker', '1988-06-29'),
       (2, 'jordan', 'elkallassi', '1994-06-29');
 

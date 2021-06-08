@@ -1,7 +1,7 @@
 CREATE TABLE users (
 	user_id NUMERIC NOT NULL,
 	first_name VARCHAR(25) NOT NULL,
-	surname VARCHAR(25) NOT NULL,
+	last_name VARCHAR(25) NOT NULL,
 	dob DATE NOT NULL
 );
 
