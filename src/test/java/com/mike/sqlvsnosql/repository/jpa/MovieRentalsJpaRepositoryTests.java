@@ -1,5 +1,6 @@
 package com.mike.sqlvsnosql.repository.jpa;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
@@ -32,35 +33,53 @@ public class MovieRentalsJpaRepositoryTests {
 	@Test
 	public void getById() {
 		User user = repository.getUserById(1L);
-		assertEquals(new User(1, "mike", "parker", LocalDate.of(1988, 6, 29)), user);
+		assertEquals(new User(1L, "mike", "parker", LocalDate.of(1988, 6, 29)), user);
 	}
 	
-//	@Test
-//	public void getByFirstName() {
-//		List<User> users = repository.getUsersByFirstName("mike");
-//		assertEquals(List.of(new User(1, "mike", "parker", LocalDate.of(1988, 6, 29))), users);
-//	}
-//	
+	@Test
+	public void getByFirstName() {
+		List<User> users = repository.getUsersByFirstName("mike");
+		assertEquals(List.of(new User(1L, "mike", "parker", LocalDate.of(1988, 6, 29))), users);
+	}
+	
 	@Test
 	public void updateSurname() {
 		User user = repository.getUserById(1L);
 		String newLastName = "NEWSURNAME";
 		user.setLastName(newLastName);
-		User updated = repository.upsert(user);
+		User updated = repository.save(user);
 		assertEquals(user, updated);
 		assertEquals(user, repository.getUserById(1L));
 	}
 	
 	@Test
 	public void insert() {
-		User user = new User();
-		user.setFirstName("mickey");
-		user.setLastName("mouse");
-		user.setDob(LocalDate.of(2000, 1, 1));
-		User updated = repository.upsert(user);
-		System.out.println(updated.getId());
-		assertEquals(user, updated);
-		assertEquals(user, repository.getUserById(updated.getId()));
+		User user = User.builder()
+				        .firstName("mickey")
+				        .lastName("mouse")
+				        .dob(LocalDate.of(2000, 1, 1))
+				        .build();
+		User inserted = repository.save(user);
+		
+		user.setId(inserted.getId());
+		assertEquals(user, inserted);
+		assertEquals(user, repository.getUserById(user.getId()));
+	}
+
+	
+	@Test
+	public void deleteUserById() {
+		User user = User.builder()
+				        .firstName("daffy")
+				        .lastName("duck")
+				        .dob(LocalDate.of(2002, 6, 6))
+				        .build();
+		User inserted = repository.save(user);
+		
+		repository.deleteById(inserted.getId());
+		
+		assertNull(repository.getUserById(inserted.getId()));
+		
 	}
 	
 
