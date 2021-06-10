@@ -15,11 +15,11 @@ public class MovieRentalsJdbcRepository {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private RowMapper<User> userMapper = 
-			(rs, rowNum) -> new User(rs.getLong("user_id"), 
-						             rs.getString("first_name"), 
-						             rs.getString("last_name"), 
-						             rs.getDate("dob").toLocalDate());
+	private RowMapper<User> userMapper = null;
+//			(rs, rowNum) -> new User(rs.getLong("user_id"), 
+//						             rs.getString("first_name"), 
+//						             rs.getString("last_name"), 
+//						             rs.getDate("dob").toLocalDate());
 	
 	public List<User> getUsersByFirstName(String firstName) {
 		List<User> users = jdbcTemplate.query("SELECT user_id, first_name, last_name, dob "

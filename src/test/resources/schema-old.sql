@@ -12,6 +12,17 @@ CREATE TABLE movies (
 	director VARCHAR(25) NOT NULL,
 	release_date DATE,
 	rating NUMERIC,
+	qty SMALLINT NOT NULL,
+	qty_available SMALLINT NOT NULL,
 	PRIMARY KEY (movie_id)
 	
+);
+
+CREATE TABLE address (
+	user_id BIGINT NOT NULL AUTO_INCREMENT,
+	line_1 VARCHAR(25) NOT NULL,
+	line_2 VARCHAR(25),
+	country_id SMALLINT NOT NULL,
+	zip VARCHAR(25),
+	PRIMARY KEY (user_id)
 );

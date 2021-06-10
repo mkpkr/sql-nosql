@@ -1,15 +1,15 @@
 package com.mike.sqlvsnosql.model;
 
-import java.time.LocalDate;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -22,20 +22,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="users")
-public class User {
+@Table(name="addresses")
+public class Address {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="user_id")
+//	@Column(name = "user_id")
 	private Long id;
 	
-	private String firstName;
-	private String lastName;
-	private LocalDate dob;
+	@OneToOne
+//    @MapsId
+    @JoinColumn(name = "user_id")
+	private User user;
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private Address address;
+	private int aptNo;
+	private String line1;
+	private String line2;
+	
+	@Enumerated(EnumType.STRING)
+//    @Column(length = 8)
+	private Country country;
+	private String zip;
+	
+	
+	
+	
+	
 
 }
